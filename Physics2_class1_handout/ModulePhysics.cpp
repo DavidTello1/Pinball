@@ -38,19 +38,19 @@ bool ModulePhysics::Start()
 	// - You need to send it a default gravity
 	// - You need init the world in the constructor
 	// - Remember to destroy the world after using it
-	b2Vec2 gravity(0.0f, -10.0f);
+	b2Vec2 gravity(0.0f, 15.0f);
 	world = new b2World(gravity);
 
 
-	// TODO 4: Create a a big static circle as "ground"
+	// DONE TODO 4: Create a a big static circle as "ground"
 
 	b2BodyDef bodyDef;
-	bodyDef.position.Set(PIXELS_TO_METERS(100), PIXELS_TO_METERS(100));
+	bodyDef.position.Set(PIXELS_TO_METERS(500), PIXELS_TO_METERS(400));
 	b2Body* groundBody = world->CreateBody(&bodyDef);
 
 	b2CircleShape circleBody; 
-	circleBody.m_radius = 50;
-	groundBody->CreateFixture(&circleBody, 0.0f);
+	circleBody.m_radius = PIXELS_TO_METERS(300);
+	groundBody->CreateFixture(&circleBody, 1.0f);
 
 	return true;
 }
@@ -61,7 +61,7 @@ update_status ModulePhysics::PreUpdate()
 	// DONE TODO 3: Update the simulation ("step" the world)
 	float32 timeStep = 1.0f / 60.0f;
 	int32 velocityIterations = 10;
-	int32 positionIterations = 3;
+	int32 positionIterations = 4;
 	world->Step(timeStep, velocityIterations, positionIterations);
 
 	return UPDATE_CONTINUE;
@@ -72,7 +72,19 @@ update_status ModulePhysics::PostUpdate()
 {
 	// TODO 5: On space bar press, create a circle on mouse position
 	// - You need to transform the position / radius
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 
+		b2BodyDef bodyDef;
+		bodyDef.type = b2_dynamicBody;
+		bodyDef.position.Set(PIXELS_TO_METERS(App->input->GetMouseX()), PIXELS_TO_METERS(App->input->GetMouseY()));
+		b2Body* groundBody = world->CreateBody(&bodyDef);
+
+		b2CircleShape lilCircle;
+		lilCircle.m_radius = PIXELS_TO_METERS(20);
+		groundBody->CreateFixture(&lilCircle, 0.0f);
+	}
+
+//////////////////////////////////////////////////////////////////////////
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
 
