@@ -20,10 +20,12 @@ enum update_status
 	UPDATE_ERROR
 };
 
-// Configuration -----------
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 768
+//--------- Configuration ----------
+#define SCREEN_WIDTH 596
+#define SCREEN_HEIGHT 938
 #define SCREEN_SIZE 1
+#define WIN_POS_X 20
+#define WIN_POS_Y 20
 #define WIN_FULLSCREEN false
 #define WIN_RESIZABLE false
 #define WIN_BORDERLESS false

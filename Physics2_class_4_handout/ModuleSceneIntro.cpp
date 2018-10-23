@@ -38,6 +38,26 @@ bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
 
+	App->textures->Unload(background);
+	App->textures->Unload(circle);
+	App->textures->Unload(box);
+	App->textures->Unload(rick);
+	bonus_fx = NULL;
+
+	//p2List_item<SDL_Texture*>* item = App->textures->textures.getFirst();
+	//
+	//while (item != NULL)
+	//{
+	//	LOG("deleting %s", item->data);
+	//	App->textures->Unload(item->data);
+	//	item = item->next;
+	//}
+	//
+	//for (item = App->textures->textures.getFirst(); item != NULL; item = item->next)
+	//{
+	//	LOG("deleting %s", item->data);
+	//	App->textures->Unload(item->data);
+	//}
 	return true;
 }
 
@@ -132,6 +152,8 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
 		c = c->next;
 	}
+
+	App->renderer->Blit(background, background_rect.x, background_rect.y, &background_rect, 1.0f);
 
 	return UPDATE_CONTINUE;
 }
