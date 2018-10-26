@@ -35,24 +35,6 @@ bool ModulePhysics::Start()
 	b2BodyDef bd;
 	ground = world->CreateBody(&bd);
 
-	// big static circle as "ground" in the middle of the screen
-	//int x = SCREEN_WIDTH / 2;
-	//int y = SCREEN_HEIGHT / 1.5f;
-	//int diameter = SCREEN_WIDTH / 2;
-	//
-	//b2BodyDef body;
-	//body.type = b2_staticBody;
-	//body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-	//
-	//b2Body* big_ball = world->CreateBody(&body);
-	//
-	//b2CircleShape shape;
-	//shape.m_radius = PIXEL_TO_METERS(diameter) * 0.5f;
-	//
-	//b2FixtureDef fixture;
-	//fixture.shape = &shape;
-	//big_ball->CreateFixture(&fixture);
-
 	return true;
 }
 
@@ -185,6 +167,64 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 	return pbody;
 }
 
+PhysBody * ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height, int angle)
+{
+	b2BodyDef body;
+	body.type = b2_staticBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	body.angle = DEGTORAD * angle;
+
+	b2Body* b = world->CreateBody(&body);
+
+	b2PolygonShape box;
+	box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
+
+	b2FixtureDef fixture;
+	fixture.shape = &box;
+	fixture.density = 1.0f;
+	fixture.isSensor = true;
+
+	b->CreateFixture(&fixture);
+
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->width = width;
+	pbody->height = height;
+
+	return pbody;
+}
+
+b2RevoluteJoint * ModulePhysics::CreateRevoluteJoint(PhysBody * joint, PhysBody * body, iPoint anchor_offset, iPoint body_offset, bool enable_limit, float max_angle, float min_angle, bool enable_motor, int motor_speed, int max_torque)
+{
+	b2RevoluteJointDef def;
+	def.bodyA = joint->body;
+	def.bodyB = body->body;
+	def.collideConnected = false;
+	def.type = e_revoluteJoint;
+	def.enableLimit = enable_limit;
+	def.enableMotor = enable_limit;
+	b2Vec2 joint_center(PIXEL_TO_METERS(anchor_offset.x), PIXEL_TO_METERS(anchor_offset.y));
+	def.localAnchorA = joint_center;
+	b2Vec2 body_center(PIXEL_TO_METERS(body_offset.x), PIXEL_TO_METERS(body_offset.y));
+	def.localAnchorB = body_center;
+
+	if (enable_limit)
+	{
+		def.lowerAngle = DEGTORAD * min_angle;
+		def.upperAngle = DEGTORAD * max_angle;
+	}
+	if (enable_motor)
+	{
+		def.motorSpeed = motor_speed;
+		def.maxMotorTorque = max_torque;
+	}
+
+	b2RevoluteJoint* rev_joint = (b2RevoluteJoint*)world->CreateJoint(&def);
+
+	return rev_joint;
+}
+
 // 
 update_status ModulePhysics::PostUpdate()
 {
@@ -263,6 +303,8 @@ update_status ModulePhysics::PostUpdate()
 				}
 				break;
 			}
+
+
 
 			// TODO 1: If mouse button 1 is pressed ...
 			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
