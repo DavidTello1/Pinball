@@ -29,4 +29,5 @@ public:
 	uint bonus_fx;
 
 	SDL_Rect background_rect;
+	bool layer2 = false;
 };
