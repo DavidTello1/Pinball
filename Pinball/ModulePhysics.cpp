@@ -195,15 +195,15 @@ PhysBody * ModulePhysics::CreateRectangleSensor(int x, int y, int width, int hei
 	return pbody;
 }
 
-b2RevoluteJoint * ModulePhysics::CreateRevoluteJoint(PhysBody * joint, PhysBody * body, iPoint anchor_offset, iPoint body_offset, bool enable_limit, float max_angle, float min_angle, bool enable_motor, int motor_speed, int max_torque)
+b2RevoluteJoint * ModulePhysics::CreateRevoluteJoint(PhysBody * flipper, PhysBody * support, iPoint anchor_offset, iPoint body_offset, bool enable_limit = true, float max_angle, float min_angle, bool enable_motor, int motor_speed, int max_torque)
 {
 	b2RevoluteJointDef def;
-	def.bodyA = joint->body;
-	def.bodyB = body->body;
+	def.bodyA = flipper->body;
+	def.bodyB = support->body;
 	def.collideConnected = false;
 	def.type = e_revoluteJoint;
 	def.enableLimit = enable_limit;
-	def.enableMotor = enable_limit;
+	def.enableMotor = enable_motor;
 	b2Vec2 joint_center(PIXEL_TO_METERS(anchor_offset.x), PIXEL_TO_METERS(anchor_offset.y));
 	def.localAnchorA = joint_center;
 	b2Vec2 body_center(PIXEL_TO_METERS(body_offset.x), PIXEL_TO_METERS(body_offset.y));

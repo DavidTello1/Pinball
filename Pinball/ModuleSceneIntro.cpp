@@ -413,7 +413,7 @@ bool ModuleSceneIntro::Start()
 		153, 419,
 		117, 450
 	};
-	/*
+	
 	App->physics->CreateChain(0, 0, background, 148);
 	App->physics->CreateChain(0, 0, background2, 32);
 	App->physics->CreateChain(0, 0, background3, 18);
@@ -422,7 +422,7 @@ bool ModuleSceneIntro::Start()
 	App->physics->CreateChain(0, 0, background7, 30);
 	App->physics->CreateChain(0, 0, background8, 28);
 	App->physics->CreateChain(0, 0, background9, 40);
-	*/
+	
 
 	App->physics->CreateChain(0, 0, background_layer2, 168);
 	App->physics->CreateChain(0, 0, background_layer2b, 170);
