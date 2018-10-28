@@ -85,6 +85,7 @@ update_status ModuleSceneIntro::Update()
 	{
 		flipper_right->EnableMotor(false);
 	}
+
 	// hole
 	if (Hole == true)
 	{
