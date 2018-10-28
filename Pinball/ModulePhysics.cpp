@@ -231,8 +231,8 @@ b2RevoluteJoint * ModulePhysics::CreateFlipper(int x, int y, Side side)
 
 	if (side == right)
 	{
-		angle_ref += 170;
-		flip = CreateRectangle(x, y, flipwidth, flipheight, b2_dynamicBody, flipdensity, angle_ref);
+		angle_ref += 235;
+		flip = CreateRectangle(x - flipwidth, y, flipwidth, flipheight, b2_dynamicBody, flipdensity, -angle_ref);
 	}
 	else if (side == left)
 	{
