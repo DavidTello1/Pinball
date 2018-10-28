@@ -110,8 +110,8 @@ update_status ModuleSceneIntro::Update()
 			}
 
 			// create layer2 colliders
-			coll_l2 = App->physics->CreateChain(0, 0, background_layer2, 168);
-			coll_l2b = App->physics->CreateChain(0, 0, background_layer2b, 170);
+			coll_l2 = App->physics->CreateChain(0, 0, background_layer2, 168, 0, 1);
+			coll_l2b = App->physics->CreateChain(0, 0, background_layer2b, 170, 0, 1);
 		}
 		else
 		{
@@ -124,11 +124,11 @@ update_status ModuleSceneIntro::Update()
 			}
 
 			// create layer1 colliders
-			coll_1 = App->physics->CreateChain(0, 0, background1, 178);
-			coll_4 = App->physics->CreateChain(0, 0, background4, 46);
-			coll_7 = App->physics->CreateChain(0, 0, background7, 30);
-			coll_8 = App->physics->CreateChain(0, 0, background8, 28);
-			coll_9 = App->physics->CreateChain(0, 0, background9, 40);
+			coll_1 = App->physics->CreateChain(0, 0, background1, 178, 0, 1);
+			coll_4 = App->physics->CreateChain(0, 0, background4, 46, 0, 1);
+			coll_7 = App->physics->CreateChain(0, 0, background7, 30, 0, 1);
+			coll_8 = App->physics->CreateChain(0, 0, background8, 28, 0, 1);
+			coll_9 = App->physics->CreateChain(0, 0, background9, 40, 0, 1);
 
 			bouncer3 = App->physics->CreateCircleBouncers(227, 365);
 
