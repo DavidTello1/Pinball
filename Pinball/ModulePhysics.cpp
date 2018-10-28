@@ -108,11 +108,12 @@ PhysBody * ModulePhysics::CreateCircleSensor(int x, int y, int radius)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2BodyType type, float density)
+PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2BodyType type, float density, float angle)
 {
 	b2BodyDef body;
 	body.type = type;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	body.angle = DEGTORAD * angle;
 
 	b2Body* b = world->CreateBody(&body);
 	b2PolygonShape box;
@@ -216,29 +217,32 @@ b2RevoluteJoint * ModulePhysics::CreateFlipper(int x, int y, Side side)
 {
 	b2RevoluteJointDef def;
 
-	int flipwidth = 40;
-	int flipheight = 5;
+	int flipwidth = 83;
+	int flipheight = 15;
 
-	PhysBody* pivot = CreateCircle(x, y, flipheight / 50, b2_staticBody, 0.0f, 1.0f);
+	PhysBody* pivot = CreateCircle(x, y, flipheight / 2, b2_staticBody, 0.0f, 1.0f);
 	PhysBody* flip = nullptr;
 
-	int angle_ref = 0;
-	int angle_up = 20;
-	int angle_down = -20;
+	float angle_ref = -18;
+	float angle_up = angle_ref + 20;
+	float angle_down = angle_ref;
 
 	float flipdensity = 100;
 
 	if (side == right)
 	{
-		angle_ref += 180;
-		flip = CreateRectangle(x - flipwidth, y, flipwidth, flipheight, b2_dynamicBody, flipdensity);
+		angle_ref += 170;
+		flip = CreateRectangle(x, y, flipwidth, flipheight, b2_dynamicBody, flipdensity, angle_ref);
 	}
 	else if (side == left)
 	{
-		flip = CreateRectangle(x, y, flipwidth, flipheight, b2_dynamicBody, flipdensity);
+		flip = CreateRectangle(x, y, flipwidth, flipheight, b2_dynamicBody, flipdensity, angle_ref);
 	}
 
 	CreateRevJointDef(&def, flip, pivot);
+
+	def.localAnchorA.Set(PIXEL_TO_METERS(-flipwidth / 1.3), PIXEL_TO_METERS(0));
+	def.localAnchorB.Set(PIXEL_TO_METERS(0), PIXEL_TO_METERS(0));
 
 	def.enableLimit = true;
 	def.referenceAngle = angle_ref * DEGTORAD;
@@ -247,7 +251,7 @@ b2RevoluteJoint * ModulePhysics::CreateFlipper(int x, int y, Side side)
 
 	def.localAnchorA.Set(PIXEL_TO_METERS(-flipwidth / 2), PIXEL_TO_METERS(0));
 
-	def.enableMotor = true;
+	def.enableMotor = false;
 	def.maxMotorTorque = 10000;
 	float mot_speed = 30;
 

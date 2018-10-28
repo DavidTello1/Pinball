@@ -4,6 +4,7 @@
 #include "p2Point.h"
 #include "Globals.h"
 #include "ModulePhysics.h"
+#include "string.h"
 
 class PhysBody;
 
@@ -21,8 +22,14 @@ public:
 	void CreateAllBouncers();
 	void CreateAllSensors();
 	void CreateAllFlippers();
+	void ResetGame();
 
 public:
+
+	int score;
+	int balls_left;
+	p2SString title;
+
 	PhysBody* ball;
 
 	//bouncers

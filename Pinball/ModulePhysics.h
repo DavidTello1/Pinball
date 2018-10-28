@@ -5,7 +5,7 @@
 #include "Box2D/Box2D/Box2D.h"
 
 #define GRAVITY_X 0.0f
-#define GRAVITY_Y -7.0f
+#define GRAVITY_Y -10.0f
 
 #define PIXELS_PER_METER 50.0f // if touched change METER_PER_PIXEL too
 #define METER_PER_PIXEL 0.02f // this is 1 / PIXELS_PER_METER !
@@ -45,7 +45,7 @@ public:
 
 	PhysBody* CreateCircle(int x, int y, int radius, b2BodyType type, float restitution, float density);
 	PhysBody* CreateCircleSensor(int x, int y, int radius);
-	PhysBody* CreateRectangle(int x, int y, int width, int height, b2BodyType type, float density);
+	PhysBody* CreateRectangle(int x, int y, int width, int height, b2BodyType type, float density, float angle);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height, int angle = 0);
 	PhysBody* CreateChain(int x, int y, int* points, int size, float restitution, float density);
 
