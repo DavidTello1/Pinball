@@ -44,6 +44,7 @@ bool ModuleSceneIntro::Start()
 	shown = false;
 	Hole = false;
 	cat_1 = cat_2 = cat_3 = cat_4 = false;
+	highscore = 0;
 	
 	return ret;
 }
@@ -65,7 +66,7 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {
 
-	p2SString title(" -- The Rambling Wheels -- SCORE: %d -- BALLS LEFT: %d --", score, balls_left);
+	p2SString title(" -- The Rambling Wheels -- SCORE: %d -- HIGHSCORE: %d --", score, highscore);
 	App->window->SetTitle(title.GetString());
 
 	// hole
@@ -173,7 +174,7 @@ update_status ModuleSceneIntro::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		y -= 10;
+		y -= 20;
 		spring->body->ApplyLinearImpulse(vec, point, wake);
 	}
 	App->renderer->Blit(muelle, x, y, NULL, 1.0f);
@@ -282,6 +283,10 @@ void ModuleSceneIntro::CreateAllFlippers()
 
 void ModuleSceneIntro::ResetGame()
 {
+	if (score > highscore || highscore == 0)
+	{
+		highscore = score;
+	}
 	score = 0;
-	balls_left = 3;
+
 }

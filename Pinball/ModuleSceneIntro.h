@@ -27,7 +27,7 @@ public:
 public:
 
 	int score;
-	int balls_left;
+	int highscore;
 	p2SString title;
 
 	PhysBody* ball;
