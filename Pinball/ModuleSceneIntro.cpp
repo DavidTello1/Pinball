@@ -37,14 +37,14 @@ bool ModuleSceneIntro::Start()
 	CreateAllFlippers();
 	ball = App->physics->CreateCircle(572, 730, 13, b2_dynamicBody, 0.0f, 1.0f);
 	spring = App->physics->CreateRectangle(575, 854, 28, 166, b2_dynamicBody, 1.0f, 0.0f);
+	over = App->physics->CreateRectangleSensor(270, 920, 200, 20);
 	
-	ResetGame();
-
 	destroyed = true;
 	shown = false;
 	Hole = false;
 	cat_1 = cat_2 = cat_3 = cat_4 = false;
 	highscore = 0;
+	gameover = false;
 	
 	return ret;
 }
@@ -179,12 +179,20 @@ update_status ModuleSceneIntro::Update()
 	}
 	App->renderer->Blit(muelle, x, y, NULL, 1.0f);
 
+	if (gameover == true)
+	{
+		ResetGame();
+	}
 
 	return UPDATE_CONTINUE;
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
+	if (bodyB == over)
+	{
+		gameover = true;
+	}
 	if (bodyB == layer2_sensor_left || bodyB == layer2_sensor_right)
 	{
 		if (layer2 == false)
@@ -290,5 +298,4 @@ void ModuleSceneIntro::ResetGame()
 
 	score = 0;
 	ball = App->physics->CreateCircle(572, 730, 13, b2_dynamicBody, 0.0f, 1.0f);
-
 }

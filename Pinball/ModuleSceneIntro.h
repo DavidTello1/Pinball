@@ -26,11 +26,13 @@ public:
 
 public:
 
+	bool gameover;
 	int score;
 	int highscore;
 	p2SString title;
 
 	PhysBody* ball;
+	PhysBody* over;
 
 	//bouncers
 	PhysBody* bouncer1 = nullptr;
