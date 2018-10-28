@@ -29,7 +29,7 @@ bool ModuleSceneIntro::Start()
 	rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
-	background_rect = { 0, 0, 596, 938 };
+	background_rect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
 	int background[148] = {
 		585, 778,
@@ -443,20 +443,6 @@ bool ModuleSceneIntro::CleanUp()
 	App->textures->Unload(rick);
 	bonus_fx = NULL;
 
-	//p2List_item<SDL_Texture*>* item = App->textures->textures.getFirst();
-	//
-	//while (item != NULL)
-	//{
-	//	LOG("deleting %s", item->data);
-	//	App->textures->Unload(item->data);
-	//	item = item->next;
-	//}
-	//
-	//for (item = App->textures->textures.getFirst(); item != NULL; item = item->next)
-	//{
-	//	LOG("deleting %s", item->data);
-	//	App->textures->Unload(item->data);
-	//}
 	return true;
 }
 
