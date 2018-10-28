@@ -69,6 +69,23 @@ update_status ModuleSceneIntro::Update()
 	p2SString title(" -- The Rambling Wheels -- SCORE: %d -- HIGHSCORE: %d --", score, highscore);
 	App->window->SetTitle(title.GetString());
 
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		flipper_left->EnableMotor(true);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		flipper_right->EnableMotor(true);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
+	{
+		flipper_left->EnableMotor(false);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
+	{
+		flipper_right->EnableMotor(false);
+	}
+
 	// hole
 	if (Hole == true)
 	{
@@ -80,23 +97,6 @@ update_status ModuleSceneIntro::Update()
 		score += 10000;
 	}
 
-	// cats
-	if (cat_1 == true)
-	{
-		//change animation
-	}
-	if (cat_2 == true)
-	{
-		//change animation
-	}
-	if (cat_3 == true)
-	{
-		//change animation
-	}
-	if (cat_4 == true)
-	{
-		//change animation
-	}
 	if (cat_1 == true && cat_2 == true && cat_3 == true && cat_4 == true)
 	{
 		App->audio->PlayFx(bonus_fx);
