@@ -27,16 +27,11 @@ bool ModuleSceneIntro::Start()
 	circle = App->textures->Load("pinball/ball.png"); 
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
-	background_rect = { 0, 0, 596, 938 };
+	background_rect = { 0, 0,SCREEN_WIDTH, SCREEN_HEIGHT };
 
-	layer2_sensor_left = App->physics->CreateRectangleSensor(120, 400, 52, 2, -30);
-	layer1_sensor_left = App->physics->CreateRectangleSensor(130, 430, 52, 2, -30);
-
-	layer2_sensor_right = App->physics->CreateRectangleSensor(510, 400, 52, 2, 30);
-	layer1_sensor_right = App->physics->CreateRectangleSensor(500, 430, 52, 2, 30);
-
-	end_sensor_left = App->physics->CreateRectangleSensor(80, 695, 35, 2, -10);
-	end_sensor_right = App->physics->CreateRectangleSensor(485, 690, 35, 2, 10);
+	CreateAllBouncers();
+	CreateAllSensors();
+	App->physics->CreateAllFlippers();
 
 	destroyed = true;
 	shown = false;
@@ -225,4 +220,41 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	if (bodyB == hole) { Hole = true; 	App->audio->PlayFx(bonus_fx);}
 	
+}
+
+void ModuleSceneIntro::CreateAllBouncers()
+{
+	bouncer1 = App->physics->CreateBouncers(290, 87);
+	bouncer2 = App->physics->CreateBouncers(288, 222);
+	bouncer3 = App->physics->CreateBouncers(226, 364);
+
+	bouncers.add(bouncer1);
+	bouncers.add(bouncer2);
+	bouncers.add(bouncer3);
+}
+
+void ModuleSceneIntro::CreateAllSensors()
+{
+	layer2_sensor_left = App->physics->CreateRectangleSensor(120, 400, 52, 2, -30);
+	layer1_sensor_left = App->physics->CreateRectangleSensor(130, 430, 52, 2, -30);
+
+	layer2_sensor_right = App->physics->CreateRectangleSensor(510, 400, 52, 2, 30);
+	layer1_sensor_right = App->physics->CreateRectangleSensor(500, 430, 52, 2, 30);
+
+	end_sensor_left = App->physics->CreateRectangleSensor(80, 695, 35, 2, -10);
+	end_sensor_right = App->physics->CreateRectangleSensor(485, 690, 35, 2, 10);
+
+	sensors.add(layer2_sensor_left);
+	sensors.add(layer1_sensor_left);
+	sensors.add(layer2_sensor_right);
+	sensors.add(layer1_sensor_right);
+	sensors.add(end_sensor_left);
+	sensors.add(end_sensor_right);
+
+}
+
+void ModuleSceneIntro::CreateAllFlippers()
+{
+	flipper_right = App->physics->CreateFlipper();
+	flipper_left = App->physics->CreateFlipper();
 }

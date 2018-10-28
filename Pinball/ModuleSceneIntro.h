@@ -17,8 +17,22 @@ public:
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
+	void CreateAllBouncers();
+	void CreateAllSensors();
+	void CreateAllFlippers();
+
 public:
 	p2List<PhysBody*> circles;
+
+	//bouncers
+	p2List<PhysBody*> bouncers;
+
+	PhysBody* bouncer1;
+	PhysBody* bouncer2;
+	PhysBody* bouncer3;
+
+	//sensors
+	p2List<PhysBody*> sensors;
 
 	PhysBody* layer2_sensor_left;
 	PhysBody* layer2_sensor_right;
@@ -26,6 +40,11 @@ public:
 	PhysBody* layer1_sensor_right;
 	PhysBody* end_sensor_left;
 	PhysBody* end_sensor_right;
+
+	p2List<PhysBody*> flippers;
+
+	PhysBody* flipper_right;
+	PhysBody* flipper_left;
 
 	PhysBody* coll_1 = nullptr;
 	PhysBody* coll_2 = nullptr;
