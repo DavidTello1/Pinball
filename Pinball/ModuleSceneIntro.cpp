@@ -36,7 +36,7 @@ bool ModuleSceneIntro::Start()
 	CreateAllSensors();
 	CreateAllFlippers();
 	ball = App->physics->CreateCircle(572, 730, 13, b2_dynamicBody, 0.0f, 1.0f);
-	spring = App->physics->CreateRectangle(575, 854, 28, 166, b2_dynamicBody, 1.0f);
+	spring = App->physics->CreateRectangle(575, 854, 28, 166, b2_dynamicBody, 1.0f, 0.0f);
 	
 	ResetGame();
 
