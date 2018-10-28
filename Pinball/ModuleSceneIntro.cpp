@@ -250,8 +250,8 @@ void ModuleSceneIntro::CreateAllSensors()
 
 void ModuleSceneIntro::CreateAllFlippers()
 {
-	flipper_right = App->physics->CreateFlipper(376, 838, right);
-	flipper_left = App->physics->CreateFlipper(182, 838, left);
+	flipper_right = App->physics->CreateFlipper(374, 832, right);
+	flipper_left = App->physics->CreateFlipper(180, 832, left);
 }
 
 void ModuleSceneIntro::ResetGame()
