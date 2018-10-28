@@ -3,6 +3,7 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModulePhysics.h"
+#include "ModuleSceneIntro.h"
 #include "p2Point.h"
 #include "math.h"
 
@@ -195,6 +196,7 @@ PhysBody * ModulePhysics::CreateRectangleSensor(int x, int y, int width, int hei
 	return pbody;
 }
 
+
 b2RevoluteJoint * ModulePhysics::CreateRevoluteJoint(PhysBody * flipper, PhysBody * support, iPoint anchor_offset, iPoint body_offset, bool enable_limit = true, float max_angle, float min_angle, bool enable_motor, int motor_speed, int max_torque)
 {
 	b2RevoluteJointDef def;
@@ -225,10 +227,9 @@ b2RevoluteJoint * ModulePhysics::CreateRevoluteJoint(PhysBody * flipper, PhysBod
 	return rev_joint;
 }
 
-// 
 update_status ModulePhysics::PostUpdate()
 {
-	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
 
 	if(!debug)
@@ -275,19 +276,22 @@ update_status ModulePhysics::PostUpdate()
 				// Draw chains contour -------------------------------------------
 				case b2Shape::e_chain:
 				{
-					b2ChainShape* shape = (b2ChainShape*)f->GetShape();
-					b2Vec2 prev, v;
-
-					for(int32 i = 0; i < shape->m_count; ++i)
+					//if (!debug)
 					{
-						v = b->GetWorldPoint(shape->m_vertices[i]);
-						if(i > 0)
-							App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 100, 255, 100);
-						prev = v;
-					}
+						b2ChainShape* shape = (b2ChainShape*)f->GetShape();
+						b2Vec2 prev, v;
 
-					v = b->GetWorldPoint(shape->m_vertices[0]);
-					App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 100, 255, 100);
+						for (int32 i = 0; i < shape->m_count; ++i)
+						{
+							v = b->GetWorldPoint(shape->m_vertices[i]);
+							if (i > 0)
+								App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 100, 255, 100);
+							prev = v;
+						}
+
+						v = b->GetWorldPoint(shape->m_vertices[0]);
+						App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 100, 255, 100);
+					}
 				}
 				break;
 
