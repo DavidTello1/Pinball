@@ -67,13 +67,18 @@ public:
 	PhysBody* layer1_sensor_right;
 	PhysBody* end_sensor_left;
 	PhysBody* end_sensor_right;
+	PhysBody* cat1;
+	PhysBody* cat2;
+	PhysBody* cat3;
+	PhysBody* cat4;
+	PhysBody* hole;
 
 	//flippers
 	b2RevoluteJoint* flipper_right;
 	b2RevoluteJoint* flipper_left;
 
 	//spring
-	b2DistanceJoint* spring;
+	PhysBody* spring;
 
 	PhysBody* coll_1 = nullptr;
 	PhysBody* coll_2 = nullptr;
@@ -84,16 +89,9 @@ public:
 	PhysBody* coll_l2 = nullptr;
 	PhysBody* coll_l2b = nullptr;
 
-	PhysBody* cat1;
-	PhysBody* cat2;
-	PhysBody* cat3;
-	PhysBody* cat4;
-	PhysBody* hole;
-
 	SDL_Texture* background;
 	SDL_Texture* circle;
-	SDL_Texture* box;
-	SDL_Texture* rick;
+	SDL_Texture* muelle;
 	uint bonus_fx;
 
 	SDL_Rect background_rect;
@@ -105,7 +103,7 @@ public:
 
 	// colliders
 	int background1[178] = {
-		587, 931,
+		587, 938,
 		587, 259,
 		580, 215,
 		562, 164,
@@ -193,7 +191,7 @@ public:
 		549, 219,
 		555, 248,
 		557, 265,
-		557, 932
+		557, 938
 	};
 
 
