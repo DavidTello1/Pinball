@@ -48,9 +48,15 @@ public:
 	PhysBody* CreateRectangle(int x, int y, int width, int height, b2BodyType type, float density);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height, int angle = 0);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
+
 	PhysBody* CreateBouncers(int x, int y);
+
 	void CreateRevJointDef(b2RevoluteJointDef* def, PhysBody* A, PhysBody* B);
 	b2RevoluteJoint* CreateFlipper(int x, int y, Side side);
+
+	void CreateDistJointDef(b2DistanceJointDef* def, PhysBody* A, PhysBody* B);
+	b2DistanceJoint* CreateSpring(int x, int y, int length); //need to be reviewed
+
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);

@@ -33,6 +33,8 @@ bool ModuleSceneIntro::Start()
 	CreateAllSensors();
 	CreateAllFlippers();
 
+	//spring = App->physics->CreateSpring(572, 856, 162);
+
 	destroyed = true;
 	shown = false;
 
@@ -120,6 +122,10 @@ update_status ModuleSceneIntro::Update()
 				App->physics->world->DestroyBody(coll_7->body);
 				App->physics->world->DestroyBody(coll_8->body);
 				App->physics->world->DestroyBody(coll_9->body);
+
+				App->physics->world->DestroyBody(bouncer1->body);
+				App->physics->world->DestroyBody(bouncer2->body);
+				App->physics->world->DestroyBody(bouncer3->body);
 				destroyed = true;
 			}
 
@@ -146,6 +152,7 @@ update_status ModuleSceneIntro::Update()
 			coll_7 = App->physics->CreateChain(0, 0, background7, 30);
 			coll_8 = App->physics->CreateChain(0, 0, background8, 28);
 			coll_9 = App->physics->CreateChain(0, 0, background9, 40);
+			CreateAllBouncers();
 
 		}
 		shown = true;
@@ -156,6 +163,12 @@ update_status ModuleSceneIntro::Update()
 	{
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 13, b2_dynamicBody, 0.0f, 1.0f));
 		circles.getLast()->data->listener = this;
+	}
+
+	//debug
+	if(App->input->GetKey(SDL_SCANCODE_2)== KEY_DOWN)
+	{
+		App->physics->CreateSpring(App->input->GetMouseX(), App->input->GetMouseY(), 20);
 	}
 
 	// Prepare for raycast ------------------------------------------------------
@@ -224,13 +237,9 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 void ModuleSceneIntro::CreateAllBouncers()
 {
-	bouncer1 = App->physics->CreateBouncers(290, 87);
-	bouncer2 = App->physics->CreateBouncers(288, 222);
-	bouncer3 = App->physics->CreateBouncers(226, 364);
-
-	bouncers.add(bouncer1);
-	bouncers.add(bouncer2);
-	bouncers.add(bouncer3);
+	bouncer1 = App->physics->CreateBouncers(291, 88);
+	bouncer2 = App->physics->CreateBouncers(289, 223);
+	bouncer3 = App->physics->CreateBouncers(227, 365);
 }
 
 void ModuleSceneIntro::CreateAllSensors()
@@ -243,21 +252,10 @@ void ModuleSceneIntro::CreateAllSensors()
 
 	end_sensor_left = App->physics->CreateRectangleSensor(80, 695, 35, 2, -10);
 	end_sensor_right = App->physics->CreateRectangleSensor(485, 690, 35, 2, 10);
-
-	sensors.add(layer2_sensor_left);
-	sensors.add(layer1_sensor_left);
-	sensors.add(layer2_sensor_right);
-	sensors.add(layer1_sensor_right);
-	sensors.add(end_sensor_left);
-	sensors.add(end_sensor_right);
-
 }
 
 void ModuleSceneIntro::CreateAllFlippers()
 {
 	flipper_right = App->physics->CreateFlipper(376, 838, right);
 	flipper_left = App->physics->CreateFlipper(182, 838, left);
-
-	flippers.add(flipper_right);
-	flippers.add(flipper_left);
 }

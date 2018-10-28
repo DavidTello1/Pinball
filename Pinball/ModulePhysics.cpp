@@ -256,10 +256,38 @@ b2RevoluteJoint * ModulePhysics::CreateFlipper(int x, int y, Side side)
 	else if (side == left)
 		def.motorSpeed = mot_speed;
 
-	//b2RevoluteJoint* rev = (b2RevoluteJoint*) world->CreateJoint(&def);
-
 	return (b2RevoluteJoint*)world->CreateJoint(&def);
 }
+
+void ModulePhysics::CreateDistJointDef(b2DistanceJointDef * def, PhysBody * A, PhysBody * B)
+{
+	def->bodyA = A->body;
+	def->bodyB = B->body;
+	def->collideConnected = false;
+}
+
+b2DistanceJoint * ModulePhysics::CreateSpring(int x, int y, int length)
+{
+	b2DistanceJointDef def;
+
+	int springwidth = 28;
+	int springheight = length;
+
+	PhysBody* kicker = CreateCircle(x, y - springheight / 2, springwidth/2, b2_dynamicBody, 0.8f, 1.0f);
+	PhysBody* support = CreateCircle(x, y + springheight / 2, springwidth/2, b2_staticBody, 0.0f, 1.0f);
+
+	CreateDistJointDef(&def, kicker, support);
+
+	def.localAnchorA.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y - springheight));
+	def.localAnchorB.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y + springheight));
+
+	def.length = PIXEL_TO_METERS(length);
+	def.dampingRatio = 0.1f;
+	def.frequencyHz = 1.0f;
+
+	return (b2DistanceJoint*)world->CreateJoint(&def);
+}
+
 
 // 
 update_status ModulePhysics::PostUpdate()

@@ -26,15 +26,11 @@ public:
 	p2List<PhysBody*> circles;
 
 	//bouncers
-	p2List<PhysBody*> bouncers;
-
-	PhysBody* bouncer1;
-	PhysBody* bouncer2;
-	PhysBody* bouncer3;
+	PhysBody* bouncer1 = nullptr;
+	PhysBody* bouncer2 = nullptr;
+	PhysBody* bouncer3 = nullptr;
 
 	//sensors
-	p2List<PhysBody*> sensors;
-
 	PhysBody* layer2_sensor_left;
 	PhysBody* layer2_sensor_right;
 	PhysBody* layer1_sensor_left;
@@ -42,10 +38,12 @@ public:
 	PhysBody* end_sensor_left;
 	PhysBody* end_sensor_right;
 
-	p2List<b2RevoluteJoint*> flippers;
-
+	//flippers
 	b2RevoluteJoint* flipper_right;
 	b2RevoluteJoint* flipper_left;
+
+	//spring
+	b2DistanceJoint* spring;
 
 	PhysBody* coll_1 = nullptr;
 	PhysBody* coll_2 = nullptr;
