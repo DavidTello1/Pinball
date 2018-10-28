@@ -31,4 +31,4 @@ enum update_status
 #define WIN_BORDERLESS false
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
-#define TITLE "The Rambling Wheels"
+#define TITLE "2D Physics Playground"

@@ -12,7 +12,7 @@
 
 #define METERS_TO_PIXELS(m) ((int) floor(PIXELS_PER_METER * m))
 #define PIXEL_TO_METERS(p)  ((float) METER_PER_PIXEL * p)
-enum Side { right, left };
+
 // Small class to return to other modules to track position and rotation of physics bodies
 class PhysBody
 {
@@ -43,15 +43,14 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	PhysBody* CreateCircle(int x, int y, int radius, b2BodyType type, float restitution, float density);
-	PhysBody* CreateCircleSensor(int x, int y, int radius);
-	PhysBody* CreateRectangle(int x, int y, int width, int height, b2BodyType type, float density);
-	PhysBody* CreateRectangleSensor(int x, int y, int width, int height, int angle = 0);
+	PhysBody* CreateCircle(int x, int y, int radius);
+	PhysBody* CreateRectangle(int x, int y, int width, int height);
+	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
-	PhysBody* CreateBouncers(int x, int y);
-	void CreateRevJointDef(b2RevoluteJointDef* def, PhysBody* A, PhysBody* B);
-	b2RevoluteJoint* CreateFlipper(int x, int y, Side side);
-	
+	PhysBody* CreateRectangleSensor(int x, int y, int width, int height, int angle = 0);
+
+	b2RevoluteJoint* CreateRevoluteJoint(PhysBody* joint, PhysBody* body, iPoint anchor_offset, iPoint body_offset, bool enable_limit, float max_angle, float min_angle, bool enable_motor, int motor_speed, int max_torque);
+
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
 
