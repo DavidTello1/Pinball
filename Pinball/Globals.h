@@ -27,7 +27,7 @@ enum update_status
 #define WIN_POS_X 20
 #define WIN_POS_Y 20
 #define WIN_FULLSCREEN false
-#define WIN_RESIZABLE false
+#define WIN_RESIZABLE true
 #define WIN_BORDERLESS false
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
