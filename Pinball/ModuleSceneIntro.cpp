@@ -130,8 +130,8 @@ update_status ModuleSceneIntro::Update()
 			}
 
 			// create layer2 colliders
-			coll_l2 = App->physics->CreateChain(0, 0, background_layer2, 168);
-			coll_l2b = App->physics->CreateChain(0, 0, background_layer2b, 170);
+			coll_l2 = App->physics->CreateChain(0, 0, background_layer2, 168, 0.0f, 1.0f);
+			coll_l2b = App->physics->CreateChain(0, 0, background_layer2b, 170, 0.0f, 1.0f);
 		}
 		else
 		{
@@ -144,15 +144,18 @@ update_status ModuleSceneIntro::Update()
 			}
 
 			// create layer1 colliders
-			coll_1 = App->physics->CreateChain(0, 0, background1, 148);
-			coll_2 = App->physics->CreateChain(0, 0, background2, 32);
-			coll_3 = App->physics->CreateChain(0, 0, background3, 18);
-			coll_4 = App->physics->CreateChain(0, 0, background4, 46);
-			coll_6 = App->physics->CreateChain(0, 0, background6, 26);
-			coll_7 = App->physics->CreateChain(0, 0, background7, 30);
-			coll_8 = App->physics->CreateChain(0, 0, background8, 28);
-			coll_9 = App->physics->CreateChain(0, 0, background9, 40);
-			CreateAllBouncers();
+			coll_1 = App->physics->CreateChain(0, 0, background1, 148, 0.0f, 1.0f);
+			coll_2 = App->physics->CreateChain(0, 0, background2, 32, 0.0f, 1.0f);
+			coll_3 = App->physics->CreateChain(0, 0, background3, 18, 0.0f, 1.0f);
+			coll_4 = App->physics->CreateChain(0, 0, background4, 46, 0.0f, 1.0f);
+			coll_6 = App->physics->CreateChain(0, 0, background6, 26, 0.0f, 1.0f);
+			coll_7 = App->physics->CreateChain(0, 0, background7, 30, 0.0f, 1.0f);
+			coll_8 = App->physics->CreateChain(0, 0, background8, 28, 0.0f, 1.0f);
+			coll_9 = App->physics->CreateChain(0, 0, background9, 40, 0.0f, 1.0f);
+
+			bouncer1 = App->physics->CreateCircleBouncers(291, 88);
+			bouncer2 = App->physics->CreateCircleBouncers(289, 223);
+			bouncer3 = App->physics->CreateCircleBouncers(227, 365);
 
 		}
 		shown = true;
@@ -237,9 +240,12 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 void ModuleSceneIntro::CreateAllBouncers()
 {
-	bouncer1 = App->physics->CreateBouncers(291, 88);
-	bouncer2 = App->physics->CreateBouncers(289, 223);
-	bouncer3 = App->physics->CreateBouncers(227, 365);
+	bouncer1 = App->physics->CreateCircleBouncers(291, 88);
+	bouncer2 = App->physics->CreateCircleBouncers(289, 223);
+	bouncer3 = App->physics->CreateCircleBouncers(227, 365);
+
+	bouncer4 = App->physics->CreateChain(456, 627, bouncer4_coords, 20, 0.8f, 1.0f);
+	bouncer5 = App->physics->CreateChain(101, 626, bouncer5_coords, 24, 0.8f, 1.0f);
 }
 
 void ModuleSceneIntro::CreateAllSensors()

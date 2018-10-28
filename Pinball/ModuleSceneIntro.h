@@ -29,6 +29,37 @@ public:
 	PhysBody* bouncer1 = nullptr;
 	PhysBody* bouncer2 = nullptr;
 	PhysBody* bouncer3 = nullptr;
+	PhysBody* bouncer4 = nullptr;
+	PhysBody* bouncer5 = nullptr;
+
+	int bouncer4_coords[20] = {
+	456, 627,
+	462, 632,
+	462, 708,
+	459, 716,
+	388, 772,
+	380, 772,
+	375, 768,
+	374, 761,
+	448, 629,
+	456, 627
+	};
+
+	int bouncer5_coords[24] = {
+	101, 626,
+	110, 630,
+	150, 703,
+	180, 760,
+	181, 768,
+	175, 774,
+	168, 772,
+	155, 763,
+	96, 714,
+	94, 708,
+	95, 630,
+	101, 626
+	};
+
 
 	//sensors
 	PhysBody* layer2_sensor_left;
