@@ -36,7 +36,7 @@ bool ModuleSceneIntro::Start()
 	CreateAllSensors();
 	CreateAllFlippers();
 	ball = App->physics->CreateCircle(572, 730, 13, b2_dynamicBody, 0.0f, 1.0f);
-	spring = App->physics->CreateRectangle(575, 854, 28, 166, b2_dynamicBody, 1.0f);
+	spring = App->physics->CreateRectangle(575, 854, 28, 166, b2_dynamicBody, 1.0f, 0.0f);
 	
 	ResetGame();
 
@@ -65,8 +65,25 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {
 
-	p2SString title(" -- The Rambling Wheels -- SCORE: %d -- BALLS LEFT: %d --", score, balls_left);
+	p2SString title(" -- The Rambling Wheels -- SCORE: %d -- HIGHSCORE: %d --", score);
 	App->window->SetTitle(title.GetString());
+
+	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		flipper_left->EnableMotor(true);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		flipper_right->EnableMotor(true);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
+	{												 
+		flipper_left->EnableMotor(false);			 
+	}												 
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
+	{
+		flipper_right->EnableMotor(false);
+	}
 
 	// hole
 	if (Hole == true)
@@ -276,7 +293,7 @@ void ModuleSceneIntro::CreateAllSensors()
 
 void ModuleSceneIntro::CreateAllFlippers()
 {
-	flipper_right = App->physics->CreateFlipper(374, 832, right);
+	flipper_right = App->physics->CreateFlipper(374, 834, right);
 	flipper_left = App->physics->CreateFlipper(180, 832, left);
 }
 
