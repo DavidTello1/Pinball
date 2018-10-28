@@ -58,10 +58,8 @@ update_status ModulePhysics::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 {
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* b = world->CreateBody(&body);
@@ -82,10 +80,8 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 {
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* b = world->CreateBody(&body);
@@ -94,7 +90,6 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 
 	b2FixtureDef fixture;
 	fixture.shape = &box;
-	fixture.density = 1.0f;
 
 	b->CreateFixture(&fixture);
 
@@ -107,7 +102,6 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height)
 {
 	b2BodyDef body;
 	body.type = b2_staticBody;
@@ -168,33 +162,13 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 	return pbody;
 }
 
-PhysBody * ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height, int angle)
 {
-	b2BodyDef body;
-	body.type = b2_staticBody;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-	body.angle = DEGTORAD * angle;
 
-	b2Body* b = world->CreateBody(&body);
 
-	b2PolygonShape box;
-	box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
 
-	b2FixtureDef fixture;
-	fixture.shape = &box;
-	fixture.density = 1.0f;
-	fixture.isSensor = true;
 
-	b->CreateFixture(&fixture);
 
-	PhysBody* pbody = new PhysBody();
-	pbody->body = b;
-	b->SetUserData(pbody);
-	pbody->width = width;
-	pbody->height = height;
 
-	return pbody;
-}
 
 
 b2RevoluteJoint * ModulePhysics::CreateRevoluteJoint(PhysBody * flipper, PhysBody * support, iPoint anchor_offset, iPoint body_offset, bool enable_limit = true, float max_angle, float min_angle, bool enable_motor, int motor_speed, int max_torque)
@@ -213,18 +187,11 @@ b2RevoluteJoint * ModulePhysics::CreateRevoluteJoint(PhysBody * flipper, PhysBod
 
 	if (enable_limit)
 	{
-		def.lowerAngle = DEGTORAD * min_angle;
-		def.upperAngle = DEGTORAD * max_angle;
 	}
-	if (enable_motor)
 	{
-		def.motorSpeed = motor_speed;
-		def.maxMotorTorque = max_torque;
 	}
 
-	b2RevoluteJoint* rev_joint = (b2RevoluteJoint*)world->CreateJoint(&def);
 
-	return rev_joint;
 }
 
 update_status ModulePhysics::PostUpdate()

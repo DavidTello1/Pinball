@@ -27,7 +27,7 @@ bool ModuleSceneIntro::Start()
 	circle = App->textures->Load("pinball/ball.png"); 
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
-	background_rect = { 0, 0, 596, 938 };
+	background_rect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
 	layer2_sensor_left = App->physics->CreateRectangleSensor(120, 400, 52, 2, -30);
 	layer1_sensor_left = App->physics->CreateRectangleSensor(130, 430, 52, 2, -30);
@@ -53,20 +53,6 @@ bool ModuleSceneIntro::CleanUp()
 	App->textures->Unload(circle);
 	bonus_fx = NULL;
 
-	//p2List_item<SDL_Texture*>* item = App->textures->textures.getFirst();
-	//
-	//while (item != NULL)
-	//{
-	//	LOG("deleting %s", item->data);
-	//	App->textures->Unload(item->data);
-	//	item = item->next;
-	//}
-	//
-	//for (item = App->textures->textures.getFirst(); item != NULL; item = item->next)
-	//{
-	//	LOG("deleting %s", item->data);
-	//	App->textures->Unload(item->data);
-	//}
 	return true;
 }
 
@@ -76,18 +62,23 @@ update_status ModuleSceneIntro::Update()
 	// hole
 	if (Hole == true)
 	{
+<<<<<<< HEAD
 		App->audio->PlayFx(bonus_fx);
 		//velocity = 0;
 		//delay
 		//release
 
 		//score += ...
+=======
+		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 40, b2_dynamicBody, 0.0f, 1.0f));
+>>>>>>> 6dc8b80d160f42331f3eede354c850847c2cfa57
 		circles.getLast()->data->listener = this;
 	}
 
 	// cats
 	if (cat_1 == true)
 	{
+<<<<<<< HEAD
 		//change animation
 	}
 	if (cat_2 == true)
@@ -154,6 +145,9 @@ update_status ModuleSceneIntro::Update()
 
 		}
 		shown = true;
+=======
+		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 100, 50, b2_dynamicBody, 0.0f));
+>>>>>>> 6dc8b80d160f42331f3eede354c850847c2cfa57
 	}
 
 	// ball
