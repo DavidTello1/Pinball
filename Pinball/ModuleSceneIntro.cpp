@@ -33,8 +33,6 @@ bool ModuleSceneIntro::Start()
 	CreateAllSensors();
 	CreateAllFlippers();
 
-	//spring = App->physics->CreateSpring(572, 856, 162);
-
 	destroyed = true;
 	shown = false;
 
@@ -50,20 +48,6 @@ bool ModuleSceneIntro::CleanUp()
 	App->textures->Unload(circle);
 	bonus_fx = NULL;
 
-	//p2List_item<SDL_Texture*>* item = App->textures->textures.getFirst();
-	//
-	//while (item != NULL)
-	//{
-	//	LOG("deleting %s", item->data);
-	//	App->textures->Unload(item->data);
-	//	item = item->next;
-	//}
-	//
-	//for (item = App->textures->textures.getFirst(); item != NULL; item = item->next)
-	//{
-	//	LOG("deleting %s", item->data);
-	//	App->textures->Unload(item->data);
-	//}
 	return true;
 }
 
