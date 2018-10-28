@@ -196,9 +196,9 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 }
 
 
-PhysBody * ModulePhysics::CreateBouncers(int x, int y)
+PhysBody * ModulePhysics::CreateCircleBouncers(int x, int y)
 {
-	float restitution = 0.8f;
+	float restitution = 1.0f;
 	int rad = 40;
 	PhysBody* bouncer = CreateCircle(x, y, rad, b2_staticBody, restitution, 1.0f);
 

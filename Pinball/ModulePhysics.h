@@ -49,7 +49,7 @@ public:
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height, int angle = 0);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
 
-	PhysBody* CreateBouncers(int x, int y);
+	PhysBody* CreateCircleBouncers(int x, int y);
 
 	void CreateRevJointDef(b2RevoluteJointDef* def, PhysBody* A, PhysBody* B);
 	b2RevoluteJoint* CreateFlipper(int x, int y, Side side);
