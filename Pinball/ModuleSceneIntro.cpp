@@ -11,7 +11,7 @@
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	circle = box = rick = NULL;
+	circle = background = muelle = NULL;
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -27,6 +27,7 @@ bool ModuleSceneIntro::Start()
 
 	background = App->textures->Load("pinball/background.png");
 	circle = App->textures->Load("pinball/ball.png"); 
+	muelle = App->textures->Load("pinball/muelle.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
 	background_rect = { 0, 0,SCREEN_WIDTH, SCREEN_HEIGHT };
@@ -34,13 +35,16 @@ bool ModuleSceneIntro::Start()
 	CreateAllBouncers();
 	CreateAllSensors();
 	CreateAllFlippers();
-	ball = App->physics->CreateCircle(570, 730, 13, b2_dynamicBody, 0.0f, 1.0f);
-
+	ball = App->physics->CreateCircle(572, 730, 13, b2_dynamicBody, 0.0f, 1.0f);
+	spring = App->physics->CreateRectangle(575, 854, 28, 166, b2_dynamicBody, 1.0f);
+	
 	ResetGame();
 
 	destroyed = true;
 	shown = false;
-
+	Hole = false;
+	cat_1 = cat_2 = cat_3 = cat_4 = false;
+	
 	return ret;
 }
 
@@ -51,6 +55,7 @@ bool ModuleSceneIntro::CleanUp()
 
 	App->textures->Unload(background);
 	App->textures->Unload(circle);
+	App->textures->Unload(muelle);
 	bonus_fx = NULL;
 
 	return true;
@@ -159,6 +164,20 @@ update_status ModuleSceneIntro::Update()
 	ball->GetPosition(x, y);
 	App->renderer->Blit(circle, x, y, NULL, 1.0f, ball->GetRotation());
 
+	// spring
+	b2Vec2 vec = { 0,1.0 };
+	b2Vec2 point = { 589,937 };
+	bool wake = true;
+
+	spring->GetPosition(x, y);
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		y -= 10;
+		spring->body->ApplyLinearImpulse(vec, point, wake);
+	}
+	App->renderer->Blit(muelle, x, y, NULL, 1.0f);
+
 
 	return UPDATE_CONTINUE;
 }
@@ -246,6 +265,13 @@ void ModuleSceneIntro::CreateAllSensors()
 
 	end_sensor_left = App->physics->CreateRectangleSensor(80, 695, 35, 2, -10);
 	end_sensor_right = App->physics->CreateRectangleSensor(485, 690, 35, 2, 10);
+
+	cat_1 = App->physics->CreateRectangleSensor(376, 377, 23, 5, 30);
+	cat_2 = App->physics->CreateRectangleSensor(401, 390, 23, 5, 30);
+	cat_3 = App->physics->CreateRectangleSensor(428, 405, 23, 5, 30);
+	cat_4 = App->physics->CreateRectangleSensor(454, 419, 23, 5, 30);
+
+	Hole = App->physics->CreateCircleSensor(45, 364, 24);
 }
 
 void ModuleSceneIntro::CreateAllFlippers()
