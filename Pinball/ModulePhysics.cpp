@@ -224,14 +224,14 @@ b2RevoluteJoint * ModulePhysics::CreateFlipper(int x, int y, Side side)
 	PhysBody* flip = nullptr;
 
 	float angle_ref = -18;
-	float angle_up = angle_ref + 20;
+	float angle_up = angle_ref + 50;
 	float angle_down = angle_ref;
 
 	float flipdensity = 100;
 
 	if (side == right)
 	{
-		angle_ref += 235;
+		angle_ref += 200;
 		flip = CreateRectangle(x - flipwidth, y, flipwidth, flipheight, b2_dynamicBody, flipdensity, -angle_ref);
 	}
 	else if (side == left)
@@ -253,7 +253,7 @@ b2RevoluteJoint * ModulePhysics::CreateFlipper(int x, int y, Side side)
 
 	def.enableMotor = false;
 	def.maxMotorTorque = 10000;
-	float mot_speed = 30;
+	float mot_speed = 1000;
 
 	if (side == right)
 		def.motorSpeed = -mot_speed;

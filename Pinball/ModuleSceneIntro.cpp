@@ -287,6 +287,8 @@ void ModuleSceneIntro::ResetGame()
 	{
 		highscore = score;
 	}
+
 	score = 0;
+	ball = App->physics->CreateCircle(572, 730, 13, b2_dynamicBody, 0.0f, 1.0f);
 
 }
