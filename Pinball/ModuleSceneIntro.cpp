@@ -99,23 +99,19 @@ update_status ModuleSceneIntro::Update()
 			if (destroyed == false)
 			{
 				App->physics->world->DestroyBody(coll_1->body);
-				App->physics->world->DestroyBody(coll_2->body);
-				App->physics->world->DestroyBody(coll_3->body);
 				App->physics->world->DestroyBody(coll_4->body);
-				App->physics->world->DestroyBody(coll_6->body);
 				App->physics->world->DestroyBody(coll_7->body);
 				App->physics->world->DestroyBody(coll_8->body);
 				App->physics->world->DestroyBody(coll_9->body);
 
-				App->physics->world->DestroyBody(bouncer1->body);
-				App->physics->world->DestroyBody(bouncer2->body);
 				App->physics->world->DestroyBody(bouncer3->body);
+
 				destroyed = true;
 			}
 
 			// create layer2 colliders
-			coll_l2 = App->physics->CreateChain(0, 0, background_layer2, 168, 0.0f, 1.0f);
-			coll_l2b = App->physics->CreateChain(0, 0, background_layer2b, 170, 0.0f, 1.0f);
+			coll_l2 = App->physics->CreateChain(0, 0, background_layer2, 168);
+			coll_l2b = App->physics->CreateChain(0, 0, background_layer2b, 170);
 		}
 		else
 		{
@@ -128,17 +124,12 @@ update_status ModuleSceneIntro::Update()
 			}
 
 			// create layer1 colliders
-			coll_1 = App->physics->CreateChain(0, 0, background1, 148, 0.0f, 1.0f);
-			coll_2 = App->physics->CreateChain(0, 0, background2, 32, 0.0f, 1.0f);
-			coll_3 = App->physics->CreateChain(0, 0, background3, 18, 0.0f, 1.0f);
-			coll_4 = App->physics->CreateChain(0, 0, background4, 46, 0.0f, 1.0f);
-			coll_6 = App->physics->CreateChain(0, 0, background6, 26, 0.0f, 1.0f);
-			coll_7 = App->physics->CreateChain(0, 0, background7, 30, 0.0f, 1.0f);
-			coll_8 = App->physics->CreateChain(0, 0, background8, 28, 0.0f, 1.0f);
-			coll_9 = App->physics->CreateChain(0, 0, background9, 40, 0.0f, 1.0f);
+			coll_1 = App->physics->CreateChain(0, 0, background1, 178);
+			coll_4 = App->physics->CreateChain(0, 0, background4, 46);
+			coll_7 = App->physics->CreateChain(0, 0, background7, 30);
+			coll_8 = App->physics->CreateChain(0, 0, background8, 28);
+			coll_9 = App->physics->CreateChain(0, 0, background9, 40);
 
-			bouncer1 = App->physics->CreateCircleBouncers(291, 88);
-			bouncer2 = App->physics->CreateCircleBouncers(289, 223);
 			bouncer3 = App->physics->CreateCircleBouncers(227, 365);
 
 		}
@@ -146,20 +137,14 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	// ball
-	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 13, b2_dynamicBody, 0.0f, 1.0f));
 		circles.getLast()->data->listener = this;
 	}
 
-	//debug
-	if(App->input->GetKey(SDL_SCANCODE_2)== KEY_DOWN)
-	{
-		App->physics->CreateSpring(App->input->GetMouseX(), App->input->GetMouseY(), 20);
-	}
-
 	// Prepare for raycast ------------------------------------------------------
-	
+
 	iPoint mouse;
 	mouse.x = App->input->GetMouseX();
 	mouse.y = App->input->GetMouseY();
@@ -169,7 +154,7 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(background, background_rect.x, background_rect.y, &background_rect, 1.0f);
 
 	p2List_item<PhysBody*>* c = circles.getFirst();
-	while(c != NULL)
+	while (c != NULL)
 	{
 		int x, y;
 		c->data->GetPosition(x, y);
@@ -184,7 +169,7 @@ update_status ModuleSceneIntro::Update()
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	if (bodyB == layer2_sensor_left || bodyB == layer2_sensor_right)
-	{ 
+	{
 		if (layer2 == false)
 		{
 			layer2 = true;
@@ -213,13 +198,35 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 	}
 
-	if (bodyB == cat1) { cat_1 = true; 	App->audio->PlayFx(bonus_fx);}
-	if (bodyB == cat2) { cat_2 = true; 	App->audio->PlayFx(bonus_fx);}
-	if (bodyB == cat3) { cat_3 = true;	App->audio->PlayFx(bonus_fx);}
-	if (bodyB == cat4) { cat_4 = true; 	App->audio->PlayFx(bonus_fx);}
+	if (bodyB == cat1) { cat_1 = true; 	App->audio->PlayFx(bonus_fx); }
+	if (bodyB == cat2) { cat_2 = true; 	App->audio->PlayFx(bonus_fx); }
+	if (bodyB == cat3) { cat_3 = true;	App->audio->PlayFx(bonus_fx); }
+	if (bodyB == cat4) { cat_4 = true; 	App->audio->PlayFx(bonus_fx); }
 
-	if (bodyB == hole) { Hole = true; 	App->audio->PlayFx(bonus_fx);}
-	
+	if (bodyB == hole)
+	{
+		Hole = true;
+		App->audio->PlayFx(bonus_fx);
+	}
+
+	if (bodyB == bouncer1)
+	{
+		//score+=
+		App->audio->PlayFx(bonus_fx);
+	}
+	if (bodyB == bouncer2)
+	{
+		//score+=
+		App->audio->PlayFx(bonus_fx);
+	}
+	if (bodyB == bouncer3)
+	{
+		if (layer2 == false)
+		{
+			//score+=
+			App->audio->PlayFx(bonus_fx);
+		}
+	}
 }
 
 void ModuleSceneIntro::CreateAllBouncers()
