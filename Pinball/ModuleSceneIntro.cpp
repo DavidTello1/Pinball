@@ -6,6 +6,8 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
+#include "ModuleWindow.h"
+#include "string.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -34,6 +36,8 @@ bool ModuleSceneIntro::Start()
 	CreateAllFlippers();
 	ball = App->physics->CreateCircle(570, 730, 13, b2_dynamicBody, 0.0f, 1.0f);
 
+	ResetGame();
+
 	destroyed = true;
 	shown = false;
 
@@ -55,6 +59,10 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
+
+	p2SString title(" -- The Rambling Wheels -- SCORE: %d -- BALLS LEFT: %d --", score, balls_left);
+	App->window->SetTitle(title.GetString());
+
 	// hole
 	if (Hole == true)
 	{
@@ -63,7 +71,7 @@ update_status ModuleSceneIntro::Update()
 		//delay
 		//release
 
-		//score += ...
+		score += 10000;
 	}
 
 	// cats
@@ -86,7 +94,7 @@ update_status ModuleSceneIntro::Update()
 	if (cat_1 == true && cat_2 == true && cat_3 == true && cat_4 == true)
 	{
 		App->audio->PlayFx(bonus_fx);
-		//score += ...
+		score += 5000;
 		cat_1 = cat_2 = cat_3 = cat_4 = false;
 	}
 
@@ -182,7 +190,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			layer2 = false;
 			shown = false;
 			destroyed = false;
-			//score += ...
+
 			App->audio->PlayFx(bonus_fx);
 		}
 	}
@@ -200,19 +208,19 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	if (bodyB == bouncer1)
 	{
-		//score+=
+		score += 3000;
 		App->audio->PlayFx(bonus_fx);
 	}
 	if (bodyB == bouncer2)
 	{
-		//score+=
+		score += 2000;
 		App->audio->PlayFx(bonus_fx);
 	}
 	if (bodyB == bouncer3)
 	{
 		if (layer2 == false)
 		{
-			//score+=
+			score += 1000;
 			App->audio->PlayFx(bonus_fx);
 		}
 	}
@@ -244,4 +252,10 @@ void ModuleSceneIntro::CreateAllFlippers()
 {
 	flipper_right = App->physics->CreateFlipper(376, 838, right);
 	flipper_left = App->physics->CreateFlipper(182, 838, left);
+}
+
+void ModuleSceneIntro::ResetGame()
+{
+	score = 0;
+	balls_left = 3;
 }

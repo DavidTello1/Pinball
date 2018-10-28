@@ -2,6 +2,7 @@
 #define __ModuleWindow_H__
 
 #include "Module.h"
+#include "string.h"
 #include "SDL/include/SDL.h"
 
 class Application;
@@ -23,7 +24,7 @@ public:
 public:
 	//The window we'll be rendering to
 	SDL_Window* window;
-
+	
 	//The surface contained by the window
 	SDL_Surface* screen_surface;
 };
