@@ -23,7 +23,7 @@ public:
 	void CreateAllFlippers();
 
 public:
-	p2List<PhysBody*> circles;
+	PhysBody* ball;
 
 	//bouncers
 	PhysBody* bouncer1 = nullptr;
@@ -32,32 +32,32 @@ public:
 	PhysBody* bouncer4 = nullptr;
 	PhysBody* bouncer5 = nullptr;
 
-	int bouncer4_coords[20] = {
-	456, 627,
-	462, 632,
-	462, 708,
-	459, 716,
-	388, 772,
-	380, 772,
-	375, 768,
-	374, 761,
-	448, 629,
-	456, 627
+	int bouncer4_coords[22] = {
+		414, 691,
+		375, 758,
+		376, 770,
+		387, 773,
+		452, 721,
+		460, 711,
+		461, 693,
+		463, 634,
+		457, 629,
+		449, 628,
+		421, 679
 	};
 
-	int bouncer5_coords[24] = {
-	101, 626,
-	110, 630,
-	150, 703,
-	180, 760,
-	181, 768,
-	175, 774,
-	168, 772,
-	155, 763,
-	96, 714,
-	94, 708,
-	95, 630,
-	101, 626
+	int bouncer5_coords[22] = {
+		101, 627,
+		108, 629,
+		179, 760,
+		180, 769,
+		173, 773,
+		163, 769,
+		100, 719,
+		94, 708,
+		94, 696,
+		94, 639,
+		94, 630 
 	};
 
 	//sensors

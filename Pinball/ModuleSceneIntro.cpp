@@ -32,6 +32,7 @@ bool ModuleSceneIntro::Start()
 	CreateAllBouncers();
 	CreateAllSensors();
 	CreateAllFlippers();
+	ball = App->physics->CreateCircle(570, 730, 13, b2_dynamicBody, 0.0f, 1.0f);
 
 	destroyed = true;
 	shown = false;
@@ -63,7 +64,6 @@ update_status ModuleSceneIntro::Update()
 		//release
 
 		//score += ...
-		circles.getLast()->data->listener = this;
 	}
 
 	// cats
@@ -110,8 +110,8 @@ update_status ModuleSceneIntro::Update()
 			}
 
 			// create layer2 colliders
-			coll_l2 = App->physics->CreateChain(0, 0, background_layer2, 168, 0, 1);
-			coll_l2b = App->physics->CreateChain(0, 0, background_layer2b, 170, 0, 1);
+			coll_l2 = App->physics->CreateChain(0, 0, background_layer2, 168, 0.0, 1.0);
+			coll_l2b = App->physics->CreateChain(0, 0, background_layer2b, 170, 0.0, 1.0);
 		}
 		else
 		{
@@ -124,23 +124,16 @@ update_status ModuleSceneIntro::Update()
 			}
 
 			// create layer1 colliders
-			coll_1 = App->physics->CreateChain(0, 0, background1, 178, 0, 1);
-			coll_4 = App->physics->CreateChain(0, 0, background4, 46, 0, 1);
-			coll_7 = App->physics->CreateChain(0, 0, background7, 30, 0, 1);
-			coll_8 = App->physics->CreateChain(0, 0, background8, 28, 0, 1);
-			coll_9 = App->physics->CreateChain(0, 0, background9, 40, 0, 1);
+			coll_1 = App->physics->CreateChain(0, 0, background1, 178, 0.0, 1.0);
+			coll_4 = App->physics->CreateChain(0, 0, background4, 46, 0.0, 1.0);
+			coll_7 = App->physics->CreateChain(0, 0, background7, 30, 0.0, 1.0);
+			coll_8 = App->physics->CreateChain(0, 0, background8, 28, 0.0, 1.0);
+			coll_9 = App->physics->CreateChain(0, 0, background9, 40, 0.0, 1.0);
 
 			bouncer3 = App->physics->CreateCircleBouncers(227, 365);
 
 		}
 		shown = true;
-	}
-
-	// ball
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 13, b2_dynamicBody, 0.0f, 1.0f));
-		circles.getLast()->data->listener = this;
 	}
 
 	// Prepare for raycast ------------------------------------------------------
@@ -153,14 +146,10 @@ update_status ModuleSceneIntro::Update()
 
 	App->renderer->Blit(background, background_rect.x, background_rect.y, &background_rect, 1.0f);
 
-	p2List_item<PhysBody*>* c = circles.getFirst();
-	while (c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
-		c = c->next;
-	}
+	// ball
+	int x, y;
+	ball->GetPosition(x, y);
+	App->renderer->Blit(circle, x, y, NULL, 1.0f, ball->GetRotation());
 
 
 	return UPDATE_CONTINUE;
@@ -235,8 +224,8 @@ void ModuleSceneIntro::CreateAllBouncers()
 	bouncer2 = App->physics->CreateCircleBouncers(289, 223);
 	bouncer3 = App->physics->CreateCircleBouncers(227, 365);
 
-	bouncer4 = App->physics->CreateChain(456, 627, bouncer4_coords, 20, 0.8f, 1.0f);
-	bouncer5 = App->physics->CreateChain(101, 626, bouncer5_coords, 24, 0.8f, 1.0f);
+	bouncer4 = App->physics->CreateChain(0, 0, bouncer4_coords, 22, 0.8f, 1.0f);
+	bouncer5 = App->physics->CreateChain(0, 0, bouncer5_coords, 22, 0.8f, 1.0f);
 }
 
 void ModuleSceneIntro::CreateAllSensors()
