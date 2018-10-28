@@ -31,7 +31,7 @@ bool ModuleSceneIntro::Start()
 
 	CreateAllBouncers();
 	CreateAllSensors();
-	App->physics->CreateAllFlippers();
+	CreateAllFlippers();
 
 	destroyed = true;
 	shown = false;
@@ -154,7 +154,7 @@ update_status ModuleSceneIntro::Update()
 	// ball
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 13));
+		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 13, b2_dynamicBody, 0.0f, 1.0f));
 		circles.getLast()->data->listener = this;
 	}
 
@@ -255,6 +255,9 @@ void ModuleSceneIntro::CreateAllSensors()
 
 void ModuleSceneIntro::CreateAllFlippers()
 {
-	flipper_right = App->physics->CreateFlipper();
-	flipper_left = App->physics->CreateFlipper();
+	flipper_right = App->physics->CreateFlipper(376, 838, right);
+	flipper_left = App->physics->CreateFlipper(182, 838, left);
+
+	flippers.add(flipper_right);
+	flippers.add(flipper_left);
 }

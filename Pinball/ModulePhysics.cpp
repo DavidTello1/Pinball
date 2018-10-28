@@ -208,7 +208,7 @@ PhysBody * ModulePhysics::CreateBouncers(int x, int y)
 void ModulePhysics::CreateRevJointDef(b2RevoluteJointDef* def, PhysBody * A, PhysBody * B)
 {
 	def->bodyA = A->body;
-	def->bodyB = A->body;
+	def->bodyB = B->body;
 	def->collideConnected = false;
 }
 
@@ -255,6 +255,8 @@ b2RevoluteJoint * ModulePhysics::CreateFlipper(int x, int y, Side side)
 		def.motorSpeed = -mot_speed;
 	else if (side == left)
 		def.motorSpeed = mot_speed;
+
+	//b2RevoluteJoint* rev = (b2RevoluteJoint*) world->CreateJoint(&def);
 
 	return (b2RevoluteJoint*)world->CreateJoint(&def);
 }

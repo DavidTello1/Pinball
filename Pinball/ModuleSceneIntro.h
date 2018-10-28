@@ -3,6 +3,7 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "Globals.h"
+#include "ModulePhysics.h"
 
 class PhysBody;
 
@@ -41,10 +42,10 @@ public:
 	PhysBody* end_sensor_left;
 	PhysBody* end_sensor_right;
 
-	p2List<PhysBody*> flippers;
+	p2List<b2RevoluteJoint*> flippers;
 
-	PhysBody* flipper_right;
-	PhysBody* flipper_left;
+	b2RevoluteJoint* flipper_right;
+	b2RevoluteJoint* flipper_left;
 
 	PhysBody* coll_1 = nullptr;
 	PhysBody* coll_2 = nullptr;
